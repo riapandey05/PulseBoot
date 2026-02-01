@@ -1,5 +1,6 @@
 package com.example.PulseBoot.entity;
 
+import com.example.PulseBoot.entity.type.BloodGroupType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,33 +13,32 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(
-        name = "patient_tbl",
+        name = "patient",
         uniqueConstraints = {
-                @UniqueConstraint(name="unique_patient_email",columnNames = {"email"}),
-                @UniqueConstraint(name="unique_patient_name_birthdate",columnNames = {"name","birthDate"})
+//                @UniqueConstraint(name = "unique_patient_email", columnNames = {"email"}),
+                @UniqueConstraint(name = "unique_patient_name_birthdate", columnNames = {"name", "birthDate"})
         },
         indexes = {
-
+                @Index(name = "idx_patient_birth_date", columnList = "birthDate")
         }
 )
+
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false,length = 40)
     private String name;
+
+//    @Column(name = "birth_date")
     private LocalDate birthDate;
+
     private String email;
     private String gender;
 
-//    @Override
-//    public String toString() {
-//        return "Patient{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", birthDate=" + birthDate +
-//                ", email='" + email + '\'' +
-//                ", gender='" + gender + '\'' +
-//                '}';
-//    }
+    @Enumerated(EnumType.STRING)
+    private BloodGroupType bloodGroup;
+
+
 }
