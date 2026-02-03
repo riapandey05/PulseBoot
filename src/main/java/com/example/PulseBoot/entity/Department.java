@@ -26,7 +26,7 @@ public class Department {
     private Doctor headDoctor;
 
 
-//    join  column is defined only in owning side
+//  join  column is defined only in owning side
     @ManyToMany
     @JoinTable(
             name = "my_dpt_doctors",

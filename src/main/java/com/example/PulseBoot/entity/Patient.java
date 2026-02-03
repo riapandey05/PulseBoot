@@ -10,9 +10,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@ToString
 @Getter
 @Setter
+@ToString
 @Table(
         name = "patient",
         uniqueConstraints = {
@@ -41,11 +41,16 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
 
-    @OneToOne
-    @JoinColumn(name = "patient_insurance_id")
+
+//  Persist is used when u r performing save operation for the first time
+//  Merge is used during updates
+    @OneToOne(cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JoinColumn(name = "insurance_id",
+    referencedColumnName = "id")
     private Insurance insurance;
 //    owning side (it is important to define owning side otherwise there will be no single source of truth)
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE})
+    @ToString.Exclude
     private List<Appointment> appointments;
 }
