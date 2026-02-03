@@ -50,7 +50,7 @@ public interface PatientRepository extends JpaRepository<Patient,Long> {
     int updateNameWithId(@Param("name") String name, @Param("id") Long id);
 
 
-    Page<Patient> findAll(Pageable pageable);
+//    Page<Patient> findAll(Pageable pageable);
 
 
 }
